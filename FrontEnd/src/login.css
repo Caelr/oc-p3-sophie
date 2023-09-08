@@ -1,6 +1,7 @@
 :root {
   --color-green: #1D6154;
   --color-rust: #B1663C;
+  --color-white: #fffef8;
 }
 
 * {
@@ -38,6 +39,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+  background-color: var(--color-white);
 }
 ol, ul {
 	list-style: none;
@@ -56,18 +58,19 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
-	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
 header {
+  max-width: 1140px;
+	margin:50px auto;
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
 }
 section {
-	margin: 50px 0
+  max-width: 1140px;
+	margin:50px auto;
+
 }
 
 h1{
@@ -103,22 +106,37 @@ nav li {
 	font-size: 1.2em;
 }
 
+ul li:nth-of-type(3) {
+  font-weight: bold;
+}
+
 li:hover {
 	color: var(--color-rust);
 }
 
-
+footer {
+  position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    width: 100%;
+}
 footer nav ul {
+  max-inline-size: 1140px;
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em auto;
 }
 
 
 
 .login{
-  display: grid;
-  place-items: center;
+  width: 100%;
+  margin-block-start: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 37px;
 }
 .login__title{
@@ -156,7 +174,8 @@ footer nav ul {
   border-radius: 60px;
   text-align: center;
   font-weight: bold;
+  cursor: pointer;
 }
 .login__link{
-
+  color: inherit;
 }

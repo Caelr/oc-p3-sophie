@@ -1,6 +1,7 @@
 :root {
   --color-green: #1D6154;
   --color-rust: #B1663C;
+  --color-white: #fffef8;
 }
 
 * {
@@ -37,6 +38,7 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
+  background-color: var(--color-white);
 	line-height: 1;
 }
 ol, ul {
@@ -187,6 +189,8 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
+
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
@@ -254,4 +258,3 @@ a {
   text-decoration: none;
   color: inherit;
 }
-
