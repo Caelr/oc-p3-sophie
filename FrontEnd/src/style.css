@@ -250,3 +250,7 @@ footer nav ul {
 img.loaded {
   opacity: 1;
 }
+a {
+  text-decoration: none;
+  color: inherit;
+}
