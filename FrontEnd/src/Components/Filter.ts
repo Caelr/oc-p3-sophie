@@ -1,13 +1,18 @@
-export default class Filter{
-  form: HTMLFormElement
+import { Data } from "../@types"
+
+export default class Filter {
+  inputValue: string
+
   constructor() {
-    this.form = document.querySelector('.filter') as HTMLFormElement
-    this.filterByCategory()
+    // setup
+    this.inputValue = 'Tous'
   }
 
-  filterByCategory = () => {
-    this.form.addEventListener('click', (e) => {
-      console.log(e.target)
-    })
+  protected getDataFromApi = async (api: string, endpoint: string) => {
+    const response = await fetch(`${api}${endpoint}`)
+    const data: Data[] = await response.json()
+    if (this.inputValue === 'Tous') return data
+    const filteredData = data.filter(work => work.category.name === this.inputValue)
+    return filteredData
   }
 }
