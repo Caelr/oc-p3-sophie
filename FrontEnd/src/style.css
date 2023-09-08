@@ -209,6 +209,11 @@ footer nav ul {
   color: var(--color-green);
   position: relative;
 }
+.gallery__filter > label {
+  pointer-events: none;
+  z-index: 1;
+  position: relative;
+}
 .gallery__filter:nth-of-type(1) {
   padding-inline: 30px;
 }
@@ -232,7 +237,6 @@ footer nav ul {
 
 .gallery__filter > input[type="radio"]:checked {
   background-color: #1D6154;
-  z-index: -1;
 }
 .gallery__filter > input[type="radio"]:checked ~ label {
   color: white;
