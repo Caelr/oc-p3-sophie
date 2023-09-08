@@ -1,3 +1,11 @@
+:root {
+  --color-green: #1D6154;
+  --color-rust: #B1663C;
+}
+
+* {
+  box-sizing: border-box;
+}
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -68,7 +76,7 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: var(--color-rust)
 }
 
 h1 > span {
@@ -82,7 +90,7 @@ h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: var(--color-green)
 }
 nav ul {
 	display: flex;
@@ -96,7 +104,7 @@ nav li {
 }
 
 li:hover {
-	color: #B1663C;
+	color: var(--color-rust);
 }
 #introduction {
 	display: flex;
@@ -173,7 +181,7 @@ input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
-	background-color: #1D6154;
+	background-color: var(--color-green);
 	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
@@ -185,4 +193,47 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
+.filter {
+  margin-block: 51px;
+  font-family: 'Syne';
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.gallery__filter {
+  font-size: 16px;
+  padding-inline: 14px;
+  padding-block: 9px;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--color-green);
+  position: relative;
+}
+.gallery__filter:nth-of-type(1) {
+  padding-inline: 30px;
+}
+.gallery__filter:nth-of-type(2) {
+  padding-inline: 20px;
+}
+.gallery__filter>input[type="radio"] {
+  appearance: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 60px;
+  cursor: pointer;
+  height: 100%;
+  border: 1px solid var(--color-green);
+  margin: 0;
+  padding: 0;
+  transition: all 0.2s ease;
+}
 
+.gallery__filter > input[type="radio"]:checked {
+  background-color: #1D6154;
+  z-index: -1;
+}
+.gallery__filter > input[type="radio"]:checked ~ label {
+  color: white;
+}
