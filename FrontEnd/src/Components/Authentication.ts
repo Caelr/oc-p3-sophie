@@ -34,8 +34,8 @@ export default class Authentication {
         const isAuth: { userId: number, token: string } = await response.json()
         console.log(isAuth)
         window.location.href = '/'
-        // const tokenValidity = Date.now() + 24 * 60 * 60 * 1000
-        // console.log(tokenValidity)
+        const tokenValidity = Date.now() + 24 * 60 * 60 * 1000
+        console.log(tokenValidity)
         // localStorage.setItem('Token', isAuth.token)
         // localStorage.setItem('TokenExpiryDate', `${tokenValidity}`)
       } else {

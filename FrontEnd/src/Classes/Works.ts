@@ -11,7 +11,7 @@ export default class Works extends Filter{
     // Setup
     this.gallery = document.querySelector('.gallery') as HTMLElement
     this.form = document.querySelector('.filter') as HTMLFormElement
-
+    
     this.displayWorks()
     this.addListener()
   }

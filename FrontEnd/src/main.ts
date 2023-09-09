@@ -8,16 +8,25 @@ class App {
   path: string
   page!: typeof this.pages[keyof typeof this.pages]
   authentication!: Authentication
+  
   constructor() {
     this.path = window.location.pathname
     this.createGallery()
-    this.authentication = new Authentication({api:'http://localhost:5678/api/', endpoint:'users/login'})
+    this.createAuth()
   }
   createGallery = () => {
     if (this.path === '/') {
       this.works = new Works('http://localhost:5678/api/')
     }
   }
+
+
+  createAuth = () => {
+    if (this.path === '/login.html') {
+      this.authentication = new Authentication({api:'http://localhost:5678/api/', endpoint:'users/login'})
+    }
+  }
+
 }
 
 new App()
