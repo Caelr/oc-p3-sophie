@@ -1,12 +1,23 @@
 import Works from "./Classes/Works"
+import Authentication from "./Components/Authentication"
 import Filter from "./Components/Filter"
 
 class App {
-  private works
+  private works!: Works
+  pages!: { [key: string]: Works }
+  path: string
+  page!: typeof this.pages[keyof typeof this.pages]
+  authentication!: Authentication
   constructor() {
-    this.works = new Works('http://localhost:5678/api/')
+    this.path = window.location.pathname
+    this.createGallery()
+    this.authentication = new Authentication({api:'http://localhost:5678/api/', endpoint:'users/login'})
   }
-
+  createGallery = () => {
+    if (this.path === '/') {
+      this.works = new Works('http://localhost:5678/api/')
+    }
+  }
 }
 
 new App()

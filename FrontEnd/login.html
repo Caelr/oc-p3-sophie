@@ -22,14 +22,14 @@
     </header>
     <main class="login">
       <h1 class="login__title">Log in</h1>
-      <form action="index.html" class="login__form">
+      <form class="login__form">
         <p>
           <label for="email" class="login__form__label">Email</label>
-          <input type="email" name="email" id="email">
+          <input type="email" name="email" id="email" autocomplete="email" required>
         </p>
         <p>
           <label for="password" class="login__form__label">Mot de passe</label>
-          <input type="password" name="password" id="password">
+          <input type="password" name="password" id="password" autocomplete="current-password" required>
         </p>
         <button type="submit" class="login__form__button">Se connecter</button>
       </form>
