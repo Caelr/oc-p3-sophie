@@ -1,32 +1,28 @@
-import Works from "./Classes/Works"
-import Authentication from "./Components/Authentication"
-import Filter from "./Components/Filter"
+import Home from "./Pages/Home"
+import Login from "./Pages/Login"
 
 class App {
-  private works!: Works
-  pages!: { [key: string]: Works }
-  path: string
-  page!: typeof this.pages[keyof typeof this.pages]
-  authentication!: Authentication
-  
+  private path: string
+  private home: Home
+  private login: Login
+  private pages: {[key: string]: Home | Login}
+  private page: typeof this.pages[keyof typeof this.pages]
+
   constructor() {
     this.path = window.location.pathname
-    this.createGallery()
-    this.createAuth()
+
+    this.createPages()
   }
-  createGallery = () => {
-    if (this.path === '/') {
-      this.works = new Works('http://localhost:5678/api/')
+
+  createPages = () => {
+    this.home = new Home()
+    this.login = new Login()
+    this.pages = {
+      '/': this.home,
+      '/login.html': this.login
     }
+    this.page = this.pages[this.path]
   }
-
-
-  createAuth = () => {
-    if (this.path === '/login.html') {
-      this.authentication = new Authentication({api:'http://localhost:5678/api/', endpoint:'users/login'})
-    }
-  }
-
 }
 
 new App()
