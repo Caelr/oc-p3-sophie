@@ -179,3 +179,8 @@ footer nav ul {
 .login__link{
   color: inherit;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
