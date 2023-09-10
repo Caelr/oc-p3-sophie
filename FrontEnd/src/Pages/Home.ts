@@ -1,13 +1,17 @@
 import { Data } from '../@types'
+import Modal from '../Components/Modal'
 export default class Home {
 
   private elements: {
     gallery: HTMLElement
-    form: HTMLFormElement
+    filter: HTMLFormElement
     portfolio: HTMLElement
     section: HTMLElement
     edition: HTMLAnchorElement
+    banner: HTMLElement
   }
+
+  private modal: Modal
 
   private api: string
   private endpoint: string
@@ -21,6 +25,7 @@ export default class Home {
     this.filterValue = 'Tous'
     this.api = api
     this.endpoint = endpoint
+    this.modal = new Modal()
   }
 
   private showGallery = (works: Data[]) => {
@@ -39,7 +44,11 @@ export default class Home {
       this.elements.gallery.append(figure)
     })
   }
-
+  createFilter = () => {
+    const form = document.createElement('form')
+    form.classList.add('filter')
+    return form
+  }
   private initUi = (works: Data[]) => {
     if (!this.isAuth) {
       this.filters.forEach(filter => {
@@ -59,10 +68,14 @@ export default class Home {
         label.htmlFor = input.id
         label.innerText = `${filter}`
         galleryFilter.append(input, label)
-        this.elements.form.append(galleryFilter)
+
+        if(!this.elements.filter) return
+        this.elements.filter.append(galleryFilter)
+        this.elements.section.insertBefore(this.elements.filter, this.elements.gallery)
       })
     } else {
       this.elements.edition.style.display = 'flex'
+      this.elements.banner.style.display = 'block'
     }
     this.showGallery(works)
   }
@@ -77,20 +90,18 @@ export default class Home {
   create = async () => {
     this.elements = {
       gallery: document.querySelector('.gallery') as HTMLElement,
-      form:document.querySelector('.filter') as HTMLFormElement,
+      filter: this.createFilter(),
       portfolio: document.getElementById('portfolio') as HTMLElement,
       section: document.getElementById('portfolio') as HTMLElement,
-      edition: document.querySelector('.portfolio__edit') as HTMLAnchorElement
+      edition: document.querySelector('.portfolio__edit') as HTMLAnchorElement,
+      banner: document.querySelector('.edition') as HTMLElement
     }
-
-
 
     localStorage.getItem('authToken') !== null
       ? (this.isAuth = true)
       : (this.isAuth = false)
 
-    const works = localStorage.getItem('works')
-    if (!works) return
+    console.log(this.isAuth)
 
     this.data = await this.getApiData()
     this.initUi(this.data)
@@ -111,12 +122,19 @@ export default class Home {
     this.showGallery(filteredData)
   }
 
-  addListener = () => {
-    this.elements.form.addEventListener('click', (event) => {
-      const target = event.target
+  clickHandler = (event: MouseEvent) => {
+    const target = event.target
       if (!(target instanceof HTMLInputElement)) return
       this.filterValue = target.value as typeof this.filterValue
       this.update()
-    })
+  }
+
+  addListener = () => {
+    if (this.isAuth) {
+      this.modal.create()
+      this.modal.addListener()
+    } else {
+      this.elements.filter.addEventListener('click', this.clickHandler)
+    }
   }
 }

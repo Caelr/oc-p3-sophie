@@ -69,6 +69,7 @@ export default class Login {
 
       const data: { userId: number; token: string } = await response.json()
       this.setToken(data.token)
+      location.href = '/'
     } catch (error) {
       console.log(`Error from fetch: ${error}`)
     }
