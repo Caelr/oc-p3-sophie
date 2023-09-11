@@ -65,6 +65,7 @@ export default class Login {
             console.log(404)
             break
         }
+        return
       }
 
       const data: { userId: number; token: string } = await response.json()
@@ -78,10 +79,6 @@ export default class Login {
   addListener = () => {
     this.elements.form.addEventListener('submit', (event) => {
       event.preventDefault()
-      const formData = {
-        email: this.elements.email.value,
-        password: this.elements.password.value,
-      }
       this.signIn()
     })
   }

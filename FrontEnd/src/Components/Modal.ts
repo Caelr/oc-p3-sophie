@@ -8,6 +8,7 @@ export default class Modal {
     open: HTMLButtonElement
     close: HTMLButtonElement
   }
+  works: Data[]
   constructor() {
 
   }
@@ -15,11 +16,11 @@ export default class Modal {
   createModalGallery = () => {
     const data = localStorage.getItem('works')
     if(!data) return
-    const works: Data[] = JSON.parse(data)
+    this.works = JSON.parse(data)
 
     const modalGallery = document.createElement('div')
 
-    works.forEach(work => {
+    this.works.forEach(work => {
       const figure = document.createElement('figure')
       const image = document.createElement('img')
       const deleteButton = document.createElement('button')
@@ -36,6 +37,17 @@ export default class Modal {
     this.elements.modal.insertBefore(modalGallery, this.elements.addButton)
   }
 
+  createModalForm = () => {
+    // const modalForm = document.createElement('form')
+    // const uploadInput = document.createElement('input')
+    // const nameInput = document.createElement('input')
+    // const categoryInput = document.createElement('input')
+
+    // uploadInput.type = 'file'
+    // uploadInput.accept = 'image/jpg'
+
+  }
+
   create = () => {
     this.elements = {
       modal: document.querySelector('.modal') as HTMLDialogElement,
@@ -44,6 +56,7 @@ export default class Modal {
       open: document.querySelector('.portfolio__edit') as HTMLButtonElement,
       close: document.querySelector('.close__modal') as HTMLButtonElement
     }
+
     this.createModalGallery()
     this.elements.portfolioTitle.style.marginBlockEnd = '92px'
   }
@@ -51,11 +64,18 @@ export default class Modal {
   addListener = () => {
     this.elements.open.addEventListener('click', () => {
       this.elements.modal.showModal()
-      document.body.style.overflow = 'hidden'
+
     })
+
     this.elements.close.addEventListener('click', () => {
       this.elements.modal.close()
-      document.body.style.overflow = 'auto'
+    })
+
+    this.elements.modal.addEventListener('click', (e) => {
+      const target = e.target
+      if (!(target instanceof HTMLButtonElement)) return
+      const figure = target.closest('.modal__media')
+      figure?.remove()
     })
 
   }

@@ -315,8 +315,10 @@ a {
   align-items: center;
 }
 .modal:modal {
-  position: relative;
   display: flex;
+}
+.modal::backdrop {
+  background: rgba(0, 0, 0, 0.3);
 }
 .modal__wrapper{
 

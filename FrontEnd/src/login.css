@@ -176,11 +176,12 @@ footer nav ul {
   font-weight: bold;
   cursor: pointer;
 }
-.login__link{
-  color: inherit;
-}
 
 a {
   text-decoration: none;
   color: inherit;
+}
+.login__link{
+  color: inherit;
+  text-decoration: underline;
 }
