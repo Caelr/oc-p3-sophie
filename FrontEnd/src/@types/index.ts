@@ -9,3 +9,10 @@ export type Data = {
     name: string
   }
 }
+export type Draft = {
+  id: number,
+  title: string,
+  imageUrl: string,
+  categoryId: string,
+  userId: number
+}

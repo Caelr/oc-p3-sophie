@@ -1,82 +1,107 @@
-import { Data } from "../@types"
-
+import { Data } from '../@types'
+import NewWork from '../Classes/NewWork'
+import ModalGallery from './ModalGallery'
 export default class Modal {
+  newWork: NewWork
+  modalGallery: ModalGallery
+
   elements: {
     modal: HTMLDialogElement
+    title: HTMLHeadingElement
     addButton: HTMLButtonElement
     portfolioTitle: HTMLElement
     open: HTMLButtonElement
     close: HTMLButtonElement
-  }
-  works: Data[]
-  constructor() {
-
+    back: HTMLButtonElement
   }
 
-  createModalGallery = () => {
-    const data = localStorage.getItem('works')
-    if(!data) return
-    this.works = JSON.parse(data)
-
-    const modalGallery = document.createElement('div')
-
-    this.works.forEach(work => {
-      const figure = document.createElement('figure')
-      const image = document.createElement('img')
-      const deleteButton = document.createElement('button')
-      modalGallery.classList.add('modal__gallery')
-      figure.classList.add('modal__media')
-      image.classList.add('modal__media__image')
-      image.src = work.imageUrl
-      image.alt = work.title
-      deleteButton.classList.add('modal__delete')
-
-      figure.append(image, deleteButton)
-      modalGallery.appendChild(figure)
-    })
-    this.elements.modal.insertBefore(modalGallery, this.elements.addButton)
-  }
-
-  createModalForm = () => {
-    // const modalForm = document.createElement('form')
-    // const uploadInput = document.createElement('input')
-    // const nameInput = document.createElement('input')
-    // const categoryInput = document.createElement('input')
-
-    // uploadInput.type = 'file'
-    // uploadInput.accept = 'image/jpg'
-
+  constructor(
+    public api: string,
+    public endpoint: string,
+    public works: Data[]
+  ) {
+    this.api = api
+    this.endpoint = endpoint
+    this.works = works
+    this.newWork = new NewWork(this.api, this.endpoint, this.works)
+    this.modalGallery = new ModalGallery()
   }
 
   create = () => {
     this.elements = {
       modal: document.querySelector('.modal') as HTMLDialogElement,
+      title: document.querySelector('.modal__title') as HTMLHeadingElement,
       addButton: document.querySelector('.modal__button') as HTMLButtonElement,
-      portfolioTitle: document.querySelector('.portfolio__title') as HTMLElement,
+      portfolioTitle: document.querySelector(
+        '.portfolio__title'
+      ) as HTMLElement,
       open: document.querySelector('.portfolio__edit') as HTMLButtonElement,
-      close: document.querySelector('.close__modal') as HTMLButtonElement
+      close: document.querySelector('.close__modal') as HTMLButtonElement,
+      back: document.querySelector('.back__modal') as HTMLButtonElement,
     }
-
-    this.createModalGallery()
+    this.newWork.create()
+    this.modalGallery.create()
     this.elements.portfolioTitle.style.marginBlockEnd = '92px'
+  }
+
+  handleAddButton = () => {
+    this.elements.addButton.style.display = 'none'
+    this.elements.back.style.opacity = '1'
+    this.modalGallery.gallery.style.display = 'none'
+    this.elements.title.innerHTML = 'Ajout photo'
+    this.newWork.elements.form.style.display = 'grid'
+    this.newWork.addListener()
+
+    this.newWork.elements.form.addEventListener('submit', (event) => {
+      this.newWork.handleWorkSubmit(event)
+      this.elements.addButton.style.display = 'block'
+      this.elements.back.style.opacity = '0'
+      this.modalGallery.gallery.style.display = 'grid'
+      this.elements.title.innerHTML = 'Galerie photo'
+      this.newWork.elements.form.style.display = 'none'
+      this.newWork.removeListener()
+      this.elements.modal.close()
+    })
+  }
+
+  handleBackButton = () => {
+    this.elements.addButton.style.display = 'block'
+    this.elements.back.style.opacity = '0'
+    this.modalGallery.gallery.style.display = 'grid'
+    this.elements.title.innerHTML = 'Galerie photo'
+    this.newWork.elements.form.style.display = 'none'
+    this.newWork.removeListener()
+  }
+
+  handleCloseButton = () => {
+    this.elements.back.removeEventListener('click', this.handleBackButton)
+    this.elements.addButton.removeEventListener('click', this.handleAddButton)
+    this.elements.addButton.style.display = 'block'
+    this.elements.back.style.opacity = '0'
+    this.modalGallery.gallery.style.display = 'grid'
+    this.elements.title.innerHTML = 'Galerie photo'
+    this.newWork.elements.form.style.display = 'none'
+    this.newWork.removeListener()
+    this.elements.modal.close()
   }
 
   addListener = () => {
     this.elements.open.addEventListener('click', () => {
       this.elements.modal.showModal()
+      this.modalGallery.createGallery(
+        this.elements.modal,
+        this.elements.addButton
+      )
 
+      this.modalGallery.addListeners()
+
+      this.elements.addButton.style.display = 'block'
+
+      this.elements.addButton.addEventListener('click', this.handleAddButton)
+
+      this.elements.back.addEventListener('click', this.handleBackButton)
+
+      this.elements.close.addEventListener('click', this.handleCloseButton)
     })
-
-    this.elements.close.addEventListener('click', () => {
-      this.elements.modal.close()
-    })
-
-    this.elements.modal.addEventListener('click', (e) => {
-      const target = e.target
-      if (!(target instanceof HTMLButtonElement)) return
-      const figure = target.closest('.modal__media')
-      figure?.remove()
-    })
-
   }
 }

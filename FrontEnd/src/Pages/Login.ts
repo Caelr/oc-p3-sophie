@@ -34,13 +34,10 @@ export default class Login {
     }
   }
 
-  setToken = (token: string) => {
+  setToken = (token: string ) => {
     const currentTime = new Date().getTime()
     const expiration = currentTime + 24 * 60 * 60 * 1000
-    localStorage.setItem('authToken', JSON.stringify({
-      token,
-      expiration
-    }))
+    localStorage.setItem('authToken', JSON.stringify(token))
   }
 
   signIn = async () => {
