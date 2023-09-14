@@ -119,15 +119,17 @@ export default class NewWork {
       const newWorkData = data.pop()
       const figure = document.createElement('figure')
       const image = document.createElement('img')
+      const figcaption = document.createElement('figcaption')
 
       if (!newWorkData) return
-
+      figure.dataset.id = `${newWorkData.id}`
       image.src = newWorkData.imageUrl
       image.alt = newWorkData.title
       image.onload = () => image.classList.add('loaded')
+      figcaption.innerHTML = `${newWorkData.title}`
 
 
-      figure.append(image)
+      figure.append(image, figcaption)
 
       window.home.elements.gallery.append(figure)
 

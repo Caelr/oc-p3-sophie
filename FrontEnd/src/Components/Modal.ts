@@ -44,48 +44,48 @@ export default class Modal {
     this.elements.portfolioTitle.style.marginBlockEnd = '92px'
   }
 
-  handleAddButton = () => {
-    this.elements.addButton.style.display = 'none'
-    this.elements.back.style.opacity = '1'
-    this.modalGallery.gallery.style.display = 'none'
-    this.elements.title.innerHTML = 'Ajout photo'
-    this.newWork.elements.form.style.display = 'grid'
-    this.newWork.addListener()
-
-    this.newWork.elements.form.addEventListener('submit', (event) => {
-      this.newWork.handleWorkSubmit(event)
-      this.newWork.elements.inputCategory.value = ''
-      this.newWork.elements.inputTitle.value = ''
-      this.newWork.elements.inputUpload.value = ''
-      this.elements.addButton.style.display = 'block'
-      this.elements.back.style.opacity = '0'
-      this.modalGallery.gallery.style.display = 'grid'
-      this.elements.title.innerHTML = 'Galerie photo'
-      this.newWork.elements.form.style.display = 'none'
-      this.newWork.removeListener()
-      this.elements.modal.close()
-    })
-  }
-
-  handleBackButton = () => {
+  showGallery = () => {
     this.elements.addButton.style.display = 'block'
     this.elements.back.style.opacity = '0'
     this.modalGallery.gallery.style.display = 'grid'
     this.elements.title.innerHTML = 'Galerie photo'
     this.newWork.elements.form.style.display = 'none'
+  }
+
+  showForm = () => {
+    this.elements.addButton.style.display = 'none'
+    this.elements.back.style.opacity = '1'
+    this.modalGallery.gallery.style.display = 'none'
+    this.elements.title.innerHTML = 'Ajout photo'
+    this.newWork.elements.form.style.display = 'grid'
+  }
+
+  handleSubmitForm = (event: SubmitEvent) => {
+    this.newWork.handleWorkSubmit(event)
+      this.newWork.elements.inputCategory.value = ''
+      this.newWork.elements.inputTitle.value = ''
+      this.newWork.elements.inputUpload.value = ''
+      this.showGallery()
+      this.newWork.removeListener()
+      this.elements.modal.close()
+  }
+
+  handleAddButton = () => {
+    this.showForm()
+    this.newWork.addListener()
+    this.newWork.elements.form.addEventListener('submit', this.handleSubmitForm)
+  }
+
+  handleBackButton = () => {
+    this.showGallery()
     this.newWork.removeListener()
   }
 
   handleCloseButton = () => {
     this.elements.back.removeEventListener('click', this.handleBackButton)
     this.elements.addButton.removeEventListener('click', this.handleAddButton)
-    this.elements.addButton.style.display = 'block'
-    this.elements.back.style.opacity = '0'
-    this.modalGallery.gallery.style.display = 'grid'
-    this.elements.title.innerHTML = 'Galerie photo'
-    this.newWork.elements.form.style.display = 'none'
-    this.newWork.removeListener()
-    this.elements.modal.close()
+    this.showGallery()
+    this.removeListener()
   }
 
   addListener = () => {
@@ -106,5 +106,11 @@ export default class Modal {
 
       this.elements.close.addEventListener('click', this.handleCloseButton)
     })
+  }
+  removeListener = () => {
+    this.newWork.removeListener()
+   this.modalGallery.removeListener()
+    this.newWork.elements.form.removeEventListener('submit', this.handleSubmitForm)
+    this.elements.modal.close()
   }
 }

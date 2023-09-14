@@ -143,7 +143,6 @@ export default class Home {
       this.showGallery(this.works)
       return
     }
-    console.log(this.works)
     const filteredData = this.works.filter(
       (work) => work.category.name === this.filterValue
     )

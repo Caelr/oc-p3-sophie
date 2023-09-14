@@ -52,21 +52,30 @@ export default class ModalGallery {
       console.log('ok')
     }
   }
-  addListeners = () => {
-    this.gallery.addEventListener('click', async (event) => {
-      const target = event.target
-      if (!(target instanceof HTMLButtonElement)) return
-      const imageId = target.dataset.id
+  handleDelete = async (event: MouseEvent) => {
+    const target = event.target
+    if (!(target instanceof HTMLButtonElement)) return
+    const imageId = target.dataset.id
 
-      const worksToRemove: HTMLElement[] = Array.from(document.querySelectorAll(`[data-id='${imageId}']`))
-      worksToRemove.forEach(work => {
-        if (!work.dataset.id) return
-        this.delete(+work.dataset.id, this.token)
-        work.remove()
-      })
-      this.works = await window.home.getApiData()
-      localStorage.setItem('works', JSON.stringify(this.works))
+    if(!imageId) return
+
+    this.delete(+imageId, this.token)
+    const worksToRemove: HTMLElement[] = Array.from(document.querySelectorAll(`[data-id='${imageId}']`))
+    worksToRemove.forEach(work => {
+      if (!work.dataset.id) return
+      work.remove()
     })
+    this.works = await window.home.getApiData()
+    localStorage.setItem('works', JSON.stringify(this.works))
+
+  }
+
+  addListeners = () => {
+    this.gallery.addEventListener('click', this.handleDelete)
+  }
+
+  removeListener = () => {
+    this.gallery.removeEventListener('click', this.handleDelete)
   }
 
 }
