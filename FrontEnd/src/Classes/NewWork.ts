@@ -89,6 +89,10 @@ export default class NewWork {
       this.elements.submitButton.disabled = false
       this.elements.submitButton.style.backgroundColor = '#1D6154'
       this.elements.submitButton.style.cursor = 'pointer'
+    } else {
+      this.elements.submitButton.disabled = true
+      this.elements.submitButton.style.backgroundColor = '#a7a7a7'
+      this.elements.submitButton.style.cursor = 'not-allowed'
     }
   }
 
