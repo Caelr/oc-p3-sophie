@@ -10,6 +10,13 @@ export default class NewWork {
     previewImage: HTMLElement
   }
   token: string
+
+  children: HTMLElement[]
+
+  validImage: boolean = false
+  validTitle: boolean = false
+  validCategory: boolean = false
+
   constructor(
     public api: string,
     public endpoint: string,
@@ -51,10 +58,10 @@ export default class NewWork {
 
     this.elements.previewImage.style.border = 'none'
 
-    const children = Array.from(
+    this.children = Array.from(
       this.elements.previewImage.children
     ) as HTMLElement[]
-    children.forEach((child) => {
+    this.children.forEach((child) => {
       child.style.display = 'none'
     })
 
@@ -70,11 +77,13 @@ export default class NewWork {
   }
 
   checkFormValidity = () => {
-    const validImage = this.checkImageValidity(this.elements.inputUpload)
-    const validTitle = this.elements.inputTitle.value.trim() !== ''
-    const validCategory = this.elements.inputCategory.value !== ''
+    if (!this.validImage) {
+      this.validImage = this.checkImageValidity(this.elements.inputUpload)
+    }
+    this.validTitle = this.elements.inputTitle.value.trim() !== ''
+    this.validCategory = this.elements.inputCategory.value !== ''
 
-    const isValidForm = validCategory && validImage && validTitle
+    const isValidForm = this.validCategory && this.validImage && this.validTitle
 
     if (isValidForm) {
       this.elements.submitButton.disabled = false
@@ -112,10 +121,29 @@ export default class NewWork {
       image.src = newWorkData.imageUrl
       image.alt = newWorkData.title
       image.onload = () => image.classList.add('loaded')
+
+
       figure.append(image)
+
       window.home.elements.gallery.append(figure)
+
       localStorage.removeItem('works')
+
       localStorage.setItem('works', JSON.stringify(data))
+      this.validImage = false
+      this.validTitle = false
+      this.validCategory = false
+      const previewImage = document.querySelector('.preview__media')
+
+      if (!previewImage) return
+      previewImage.remove()
+      this.children.forEach(child => {
+        if (this.children.indexOf(child) === 0) {
+          child.style.display = 'block'
+        } else {
+          child.style.display = 'flex'
+        }
+      })
     } catch (error) {
       console.log(error)
     }

@@ -54,6 +54,9 @@ export default class Modal {
 
     this.newWork.elements.form.addEventListener('submit', (event) => {
       this.newWork.handleWorkSubmit(event)
+      this.newWork.elements.inputCategory.value = ''
+      this.newWork.elements.inputTitle.value = ''
+      this.newWork.elements.inputUpload.value = ''
       this.elements.addButton.style.display = 'block'
       this.elements.back.style.opacity = '0'
       this.modalGallery.gallery.style.display = 'grid'
