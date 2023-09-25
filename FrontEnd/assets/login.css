@@ -1,0 +1,187 @@
+:root {
+  --color-green: #1D6154;
+  --color-rust: #B1663C;
+  --color-white: #fffef8;
+}
+
+* {
+  box-sizing: border-box;
+}
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+  background-color: var(--color-white);
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/** end reset css**/
+body {
+	font-family: 'Work Sans' ;
+	font-size: 14px;
+}
+header {
+  max-width: 1140px;
+	margin:50px auto;
+	display: flex;
+	justify-content: space-between;
+}
+section {
+  max-width: 1140px;
+	margin:50px auto;
+
+}
+
+h1{
+	display: flex;
+	flex-direction: column;
+	font-family: 'Syne';
+	font-size: 22px;
+	font-weight: 800;
+	color: var(--color-rust)
+}
+
+h1 > span {
+	font-family: 'Work Sans';
+	font-size:10px;
+	letter-spacing: 0.1em;
+;
+}
+
+h2{
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 30px;
+	color: var(--color-green)
+}
+nav ul {
+	display: flex;
+	align-items: center;
+	list-style-type: none;
+
+}
+nav li {
+	padding: 0 10px;
+	font-size: 1.2em;
+}
+
+ul li:nth-of-type(3) {
+  font-weight: bold;
+}
+
+li:hover {
+	color: var(--color-rust);
+}
+
+footer {
+  position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    width: 100%;
+}
+footer nav ul {
+  max-inline-size: 1140px;
+	display: flex;
+	justify-content: flex-end;
+	margin: 2em auto;
+}
+
+
+
+.login{
+  width: 100%;
+  margin-block-start: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 37px;
+}
+.login__title{
+  color: var(--color-green);
+  font-size: 30px;
+}
+.login__form{
+  display: grid;
+  place-items: center;
+  gap: 30px;
+}
+
+.login__form > p {
+  display: grid;
+  gap: 7px;
+}
+
+.login__form input {
+  height: 50px;
+  width: 379px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09)
+}
+.login__form__label{
+  font-size: 14px;
+}
+.login__form__button{
+  all: unset;
+  height: 36px;
+  width: 179px;
+  background-color: var(--color-green);
+  color: white;
+  font-size: 14px;
+  border-radius: 60px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.login__link{
+  color: inherit;
+  text-decoration: underline;
+}
