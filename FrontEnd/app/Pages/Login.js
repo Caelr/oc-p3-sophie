@@ -21,10 +21,15 @@ export default class Login {
    */
   wrongCredentials = (status) => {
     if (status === 401) {
-      const p = document.createElement('p')
-      p.innerHTML = 'Erreur dans l’identifiant ou le mot de passe'
-      p.style.color = '#ff9494'
-      this.elements.form.insertBefore(p, this.elements.submit)
+      console.clear()
+      const existingError = document.querySelector('.existing__error')
+      if (!existingError) {
+        const p = document.createElement('p')
+        p.innerHTML = 'Erreur dans l’identifiant ou le mot de passe'
+        p.style.color = '#ff9494'
+        p.classList.add('existing__error')
+        this.elements.form.insertBefore(p, this.elements.submit)
+      }
     }
   }
 
