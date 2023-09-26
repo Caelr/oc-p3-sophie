@@ -59,6 +59,7 @@ export default class NewWork {
     figure.classList.add('preview__media')
     figure.append(image)
     this.elements.previewImage.append(figure)
+    this.elements.size.innerHTML = 'jpg, png : 4mo max'
     return true
   }
 

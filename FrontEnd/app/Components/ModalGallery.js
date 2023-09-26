@@ -46,9 +46,6 @@ export default class ModalGallery {
         Authorization: `Bearer ${token}`,
       },
     })
-    if (response.ok) {
-      console.log('ok')
-    }
   }
 
   /**
