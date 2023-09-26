@@ -7,7 +7,7 @@ export default class Login {
   /**
    * Creates the login form elements.
    */
-  create() {
+  create = () => {
     this.elements = {
       form: document.querySelector('.login__form'),
       email: document.getElementById('email'),
@@ -19,7 +19,7 @@ export default class Login {
   /**
    * Handles wrong credentials status.
    */
-  wrongCredentials(status) {
+  wrongCredentials = (status) => {
     if (status === 401) {
       const p = document.createElement('p')
       p.innerHTML = 'Erreur dans l’identifiant ou le mot de passe'
@@ -29,18 +29,9 @@ export default class Login {
   }
 
   /**
-   * Sets the authentication token in local storage.
-   */
-  setToken(token) {
-    const currentTime = new Date().getTime()
-    const expiration = currentTime + 24 * 60 * 60 * 1000
-
-  }
-
-  /**
    * Handles the sign-in process.
    */
-  async signIn() {
+   signIn = async () => {
     try {
       const response = await fetch(`${this.api}${this.endpoint}`, {
         method: 'POST',

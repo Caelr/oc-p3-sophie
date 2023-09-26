@@ -11,7 +11,7 @@ export default class NewWork {
   /**
    * Creates the NewWork form elements.
    */
-  create() {
+  create = () => {
     this.elements = {
       form: document.querySelector('.modal__form'),
       inputUpload: document.getElementById('image'),
@@ -29,7 +29,7 @@ export default class NewWork {
   /**
    * Checks the validity of the uploaded image.
    */
-  checkImageValidity(input) {
+  checkImageValidity = (input) => {
     const extensions = ['jpg', 'png']
     const maxFileSize = 4 * 1024 * 1024
 
@@ -65,7 +65,7 @@ export default class NewWork {
   /**
    * Checks the overall form validity.
    */
-  checkFormValidity() {
+  checkFormValidity = () => {
     if (!this.validImage) {
       this.validImage = this.checkImageValidity(this.elements.inputUpload)
     }
@@ -96,7 +96,7 @@ export default class NewWork {
   /**
    * Handles the form submission for a new work.
    */
-  async handleWorkSubmit(event) {
+  handleWorkSubmit = async (event) => {
     event.preventDefault()
 
     const formData = new FormData(this.elements.form)
@@ -154,32 +154,30 @@ export default class NewWork {
     }
   }
 
+  handleInputTitle = () => {
+    this.checkFormValidity()
+    if (!this.validTitle) {
+      this.elements.inputTitle.style.border = 'solid 1px red'
+      return
+    }
+    this.elements.inputTitle.style.border = 'none'
+  }
+
   /**
    * Adds event listeners for form input changes.
    */
-  addListener() {
-    this.elements.inputUpload.addEventListener('change', () =>
-      this.checkFormValidity()
-    )
-    this.elements.inputCategory.addEventListener('change', () =>
-      this.checkFormValidity()
-    )
-    this.elements.inputTitle.addEventListener('change', () => {
-      this.checkFormValidity()
-      if (!this.validTitle) {
-        this.elements.inputTitle.style.border = 'solid 1px red'
-        return
-      }
-      this.elements.inputTitle.style.border = 'none'
-    })
+  addListener = () => {
+    this.elements.inputUpload.addEventListener('change', this.checkFormValidity)
+    this.elements.inputCategory.addEventListener('change', this.checkFormValidity)
+    this.elements.inputTitle.addEventListener('change', this.handleInputTitle)
   }
 
   /**
    * Removes event listeners.
    */
-  removeListener() {
-    this.elements.inputUpload.onchange = null
-    this.elements.inputCategory.onchange = null
-    this.elements.inputTitle.onchange = null
+  removeListener = () => {
+    this.elements.inputUpload.removeEventListener('change', this.checkFormValidity)
+    this.elements.inputCategory.removeEventListener('change', this.checkFormValidity)
+    this.elements.inputTitle.removeEventListener('change', this.handleInputTitle)
   }
 }
