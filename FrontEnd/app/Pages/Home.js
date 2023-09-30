@@ -81,7 +81,7 @@ export default class Home {
         input.value === this.filterValue ? (input.checked = true) : ''
 
         label.htmlFor = input.id
-        label.innerText = `${filter}`
+        filter === 'Hotels & restaurants' ? label.innerText = 'Hôtels & restaurants' : label.innerText = `${filter}`
         galleryFilter.append(input, label)
 
         if (!this.elements.filter) return
@@ -169,7 +169,7 @@ export default class Home {
         localStorage.removeItem('authToken')
         location.reload()
       })
-      
+
     } else {
       this.navigation.innerHTML = `
       <ul>
