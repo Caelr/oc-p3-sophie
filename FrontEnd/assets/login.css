@@ -185,3 +185,7 @@ a {
   color: inherit;
   text-decoration: underline;
 }
+.about__login {
+  font-weight: 700;
+  cursor: pointer;
+}

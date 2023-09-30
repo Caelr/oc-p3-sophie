@@ -20,6 +20,7 @@ class App {
     })
     this.pages = {
       '/': this.home,
+      '/index.html': this.home,
       '/login.html': this.login,
     }
     this.page = this.pages[this.path]

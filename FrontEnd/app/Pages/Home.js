@@ -3,14 +3,17 @@ import Modal from '../Components/Modal.js'
 export default class Home {
   constructor({ api, endpoint }) {
     window.home = this
-
-    this.filters = ['Tous', 'Objets', 'Appartements', 'Hotels & restaurants']
-
+    this.filters = ['Tous']
     this.filterValue = 'Tous'
     this.api = api
     this.endpoint = endpoint
   }
 
+  getFilters = async () => {
+    const response = await fetch(`${this.api}categories`)
+    const categories = await response.json()
+    categories.forEach((category) => this.filters.push(category.name))
+  }
   /**
    * Fetches works data from the API.
    */
@@ -59,9 +62,10 @@ export default class Home {
   /**
    * Initializes the user interface.
    */
-  initUi = (works) => {
+  initUi = async (works) => {
+    await this.getFilters()
     if (!this.isAuth) {
-      // Add filter 
+      // Add filter
       this.filters.forEach((filter) => {
         // Setup
         const galleryFilter = document.createElement('p')
@@ -94,6 +98,7 @@ export default class Home {
       this.modal.create()
       this.modal.addListener()
     }
+    this.createNavigation()
     this.showGallery(works)
   }
 
@@ -124,6 +129,7 @@ export default class Home {
       section: document.getElementById('portfolio'),
       edition: document.querySelector('.portfolio__edit'),
       banner: document.querySelector('.edition'),
+      login: document.querySelector('.logout'),
     }
 
     this.setupStorageAndUi()
@@ -143,6 +149,38 @@ export default class Home {
         ? (element.style.display = 'none')
         : (element.style.display = 'block')
     })
+  }
+
+  createNavigation = () => {
+    this.navigation = document.querySelector('.navigation')
+    if (this.isAuth) {
+      this.navigation.innerHTML = `
+      <ul>
+        <li><a href="#portfolio">projets</a></li>
+        <li><a href="#contact">contact</a></li>
+        <li><a class="logout" href="/">logout</a></li>
+        <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+      </ul>
+      `
+
+      document.querySelector('.logout').addEventListener('click', (event) => {
+        event.preventDefault()
+        this.isAuth = false
+        localStorage.removeItem('authToken')
+        location.reload()
+      })
+      
+    } else {
+      this.navigation.innerHTML = `
+      <ul>
+        <li><a href="#portfolio">projets</a></li>
+        <li><a href="#contact">contact</a></li>
+        <li><a class="login" href="login.html">login</a></li>
+        <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+      </ul>
+      `
+    }
+
   }
 
   /**

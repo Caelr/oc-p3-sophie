@@ -157,6 +157,8 @@ export default class NewWork {
 
   handleInputTitle = () => {
     this.checkFormValidity()
+    const span = document.createElement('span')
+
     if (!this.validTitle) {
       this.elements.inputTitle.style.border = 'solid 1px red'
       return
@@ -169,7 +171,10 @@ export default class NewWork {
    */
   addListener = () => {
     this.elements.inputUpload.addEventListener('change', this.checkFormValidity)
-    this.elements.inputCategory.addEventListener('change', this.checkFormValidity)
+    this.elements.inputCategory.addEventListener(
+      'change',
+      this.checkFormValidity
+    )
     this.elements.inputTitle.addEventListener('change', this.handleInputTitle)
   }
 
@@ -177,8 +182,17 @@ export default class NewWork {
    * Removes event listeners.
    */
   removeListener = () => {
-    this.elements.inputUpload.removeEventListener('change', this.checkFormValidity)
-    this.elements.inputCategory.removeEventListener('change', this.checkFormValidity)
-    this.elements.inputTitle.removeEventListener('change', this.handleInputTitle)
+    this.elements.inputUpload.removeEventListener(
+      'change',
+      this.checkFormValidity
+    )
+    this.elements.inputCategory.removeEventListener(
+      'change',
+      this.checkFormValidity
+    )
+    this.elements.inputTitle.removeEventListener(
+      'change',
+      this.handleInputTitle
+    )
   }
 }

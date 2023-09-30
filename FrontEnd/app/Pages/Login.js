@@ -64,6 +64,7 @@ export default class Login {
       const data = await response.json()
       localStorage.setItem('authToken', JSON.stringify(data.token))
       location.href = '/'
+
     } catch (error) {
       console.log(`Error from fetch: ${error}`)
     }
