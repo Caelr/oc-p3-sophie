@@ -6,12 +6,14 @@ export default class NewWork {
     this.api = api
     this.endpoint = endpoint
     this.works = works
+    this.categories = []
   }
 
   /**
    * Creates the NewWork form elements.
    */
   create = () => {
+    this.getCategories()
     this.elements = {
       form: document.querySelector('.modal__form'),
       inputUpload: document.getElementById('image'),
@@ -63,21 +65,23 @@ export default class NewWork {
     return true
   }
 
+  getCategories = async () => {
+    const response = await fetch(`${this.api}categories`)
+    const categories = await response.json()
+    categories.forEach((category) => this.categories.push(category.id))
+  }
+
   /**
    * Checks the overall form validity.
    */
-  checkFormValidity = () => {
+  checkFormValidity = async () => {
     if (!this.validImage) {
       this.validImage = this.checkImageValidity(this.elements.inputUpload)
     }
 
     this.validTitle = this.elements.inputTitle.value.trim() !== ''
 
-    if (
-      this.elements.inputCategory.value === '1' ||
-      this.elements.inputCategory.value === '2' ||
-      this.elements.inputCategory.value === '3'
-    ) {
+    if (this.categories.includes(+this.elements.inputCategory.value)) {
       this.validCategory = true
     }
 
