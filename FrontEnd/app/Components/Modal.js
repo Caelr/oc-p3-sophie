@@ -4,16 +4,23 @@ import ModalGallery from './ModalGallery.js'
 export default class Modal {
   constructor(api, endpoint, works) {
     this.api = api
+    this.categories = []
     this.endpoint = endpoint
     this.works = works
     this.newWork = new NewWork(this.api, this.endpoint, this.works)
     this.modalGallery = new ModalGallery()
   }
 
+  createCategories = async () => {
+    const response = await fetch(`${this.api}categories`)
+    const categories = await response.json()
+    return categories
+  }
+
   /**
    * Creates the Modal elements.
    */
-  create = () => {
+  create = async () => {
     this.elements = {
       modal: document.querySelector('.modal'),
       title: document.querySelector('.modal__title'),
@@ -22,7 +29,15 @@ export default class Modal {
       open: document.querySelector('.portfolio__edit'),
       close: document.querySelector('.close__modal'),
       back: document.querySelector('.back__modal'),
+      options: document.getElementById('category')
     }
+    this.categories = await this.createCategories()
+    this.categories.forEach(category => {
+      const option = document.createElement('option')
+      option.value = category.id
+      option.innerHTML = category.name
+      this.elements.options.append(option)
+    })
     this.newWork.create()
     this.modalGallery.create()
     this.elements.portfolioTitle.style.marginBlockEnd = '92px'
