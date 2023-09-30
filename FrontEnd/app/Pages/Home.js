@@ -159,7 +159,7 @@ export default class Home {
         <li><a href="#portfolio">projets</a></li>
         <li><a href="#contact">contact</a></li>
         <li><a class="logout" href="/">logout</a></li>
-        <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+        <li><a href="https://instagram.com" target="_blank"><img src="./assets/icons/instagram.png" alt="Instagram"></a></li>
       </ul>
       `
 
@@ -176,7 +176,7 @@ export default class Home {
         <li><a href="#portfolio">projets</a></li>
         <li><a href="#contact">contact</a></li>
         <li><a class="login" href="login.html">login</a></li>
-        <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+        <li><a href="https://instagram.com" target="_blank"><img src="./assets/icons/instagram.png" alt="Instagram"></a></li>
       </ul>
       `
     }
